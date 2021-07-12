@@ -1,24 +1,38 @@
 # beagle-bone-black
-BBB Utilities, U-Boot , Kernel and Rootfs
-////////////////////////////////////////////////////////////////////////
+## BBB Utilities, U-Boot , Kernel and Rootfs
 
-- Bootloader has two main jobs:
-	1- Init system to a basic level (Init DRAM controller ,etc)
-	2- Load kernel to RAM.
+### Boot sequence
+	Bootloader has two main jobs:
+		1- Init system to a basic level (Init DRAM controller ,etc)
+		2- Load kernel to RAM.
 
-- From NOR memory, the boot sequence becomes a complex, multi-stage procedure.
-The details are very specific to each SOC (Generally follow 3 phases)
+	From NOR memory, the boot sequence becomes a complex, multi-stage procedure.
+	The details are very specific to each SOC (Generally follow 3 phases)
 
-	1- Phase 01: ROM code
-		- In the absence of reliable externel memory (SDCard, USB, etc), the code runs immediately after a reset power on
-		has to be stored on-chip in the SOC (ROM Code) to loads the platform initialization firmware from flash memory.
+		1. Phase 01: ROM code
+			- ROM code is capable of loading a small chunk of code from one or serval pre-programmed locations into the SRAM.
+			- It try to load code from few first pages of NAND flash memory, or from first sectors of an MMC device (eMMC or an SD card) 
+				or from a file named MLO on first partition of an MMC device.
+			- In SoCs where the SRAM is not enough to load a full bootloader like u-boot or barebox, there is an intermediate loader called SPL (Sec Prog Loader).
+			==> At the end of ROM code phase, the SPL is present in the SRAM and the ROM code jumps to the beginning of that code.
 
-	2- Phase 02: SPL (Second programm Loader) MLO in case of bbb
-		initializes the DRAM controller and other system interfaces, so as to be able to load an EFI boot manager from the EFI System Partition (ESP) on a local disk, or
-		from a network server via PXE boot.
+		2. Phase 02: Secondary Program Loader SPL
+			- The SPL must set up the memory controller and other essential parts of the system preparatory to loading the Tertiary Program Loader (TPL) into DRAM.
+			- At the end of the second phase, the TPL is present in DRAM, and the SPL can make a jump to that area.
+
+		3. Phase 03: Tertiary Program Loader (TPL)
+			- Now, at last, we are running a full bootloader, such as U-Boot or BareBox.
+			- TPL loads kernel + fdt + initramfs into DRAM.
+			- At the end of the third phase, there is a kernel in memory, waiting to be started.
+			- Embedded bootloader disappear from memory one kernel is running.
+
+![Alt text](./boot.jpg?raw=true "Boot 3 Phase architecture")
+[u-boot](http://www.denx.de/wiki/U-Boot)
+
+#### Booting with EFI
 
 
-http://www.denx.de/wiki/U-Boot
+
 
 
 
