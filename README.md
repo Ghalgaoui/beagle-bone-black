@@ -27,7 +27,10 @@
 			- Embedded bootloader disappear from memory one kernel is running.
 
 ![Alt text](./boot.jpg?raw=true "Boot 3 Phase architecture")
-[u-boot](http://www.denx.de/wiki/U-Boot)
+
+
+[u-boot wiki from denx](http://www.denx.de/wiki/U-Boot)
+
 
 #### Booting with EFI
 
