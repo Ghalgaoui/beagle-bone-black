@@ -116,16 +116,24 @@ Toolchain present here: ~/x-tools/arm-cortex_a8-linux-gnueabihf
 
 #### Pase 01
 1- Reading SRM BBB
+
 2- Reading SCHEMATICS BBB
+
 3- Yocto systemd
+
 4- Compile u-boot/linux for BBB
+
 5- Chose ext3/ext4 rootfs
+
 6- Add connman and ofono
+
 5- Develop C/C++ application (Rodio || GPS || Celular)
 
 	Refer to:
 		https://embexus.com/2017/06/04/add-a-mobile-broadband-connectivity-to-embedded-linux/
+		
 		https://embexus.com/2017/05/26/setup-a-mobile-wifi-hotspot-using-yocto/
+		
 		https://embexus.com/2017/07/11/build-a-gps-live-tracking-system/
 #### Phase 02
 
